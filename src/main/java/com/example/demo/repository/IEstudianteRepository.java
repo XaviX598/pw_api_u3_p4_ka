@@ -1,6 +1,6 @@
-package com.examen.demo.repository;
+package com.example.demo.repository;
 
-import com.example.demo.modelo.Estudiante;
+import com.example.demo.repository.modelo.Estudiante;
 
 public interface IEstudianteRepository {
 

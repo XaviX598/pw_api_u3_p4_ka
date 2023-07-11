@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examen.demo.service.IEstudianteService;
-import com.example.demo.modelo.Estudiante;
+import com.example.demo.repository.modelo.Estudiante;
+import com.example.demo.service.IEstudianteService;
+
 
 @RestController
 @RequestMapping("/estudiantes") // aqui ponermos el path de ese controlador, debe estar en PLURAL y con el

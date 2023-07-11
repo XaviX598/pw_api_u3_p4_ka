@@ -1,6 +1,6 @@
-package com.examen.demo.service;
+package com.example.demo.service;
 
-import com.example.demo.modelo.Estudiante;
+import com.example.demo.repository.modelo.Estudiante;
 
 public interface IEstudianteService {
 

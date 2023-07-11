@@ -1,4 +1,4 @@
-package com.example.demo.modelo;
+package com.example.demo.repository.modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity(name = "Estudiante")
 @Table(name = "estudiante")
 public class Estudiante {
 	@Id
@@ -80,5 +80,13 @@ public class Estudiante {
 	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
+	@Override
+	public String toString() {
+		return "Estudiante [id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido
+				+ ", fechaNacimiento=" + fechaNacimiento + "]";
+	}
+	
+	
 
 }
