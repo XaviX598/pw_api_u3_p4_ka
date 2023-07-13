@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.IMateriaService;
 
 
 
@@ -16,6 +17,9 @@ public class PwApiU3P4KaApplication implements CommandLineRunner{
 	@Autowired
 	private IEstudianteService iEstudianteService;
 	
+	@Autowired
+	private IMateriaService iMateriaService;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(PwApiU3P4KaApplication.class, args);
 	}
@@ -23,6 +27,7 @@ public class PwApiU3P4KaApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println(this.iEstudianteService.consultarPorCedula("1724441041"));	
+		System.out.println(this.iMateriaService.consultarPorNombre("programacion"));	
 	}
 
 }
