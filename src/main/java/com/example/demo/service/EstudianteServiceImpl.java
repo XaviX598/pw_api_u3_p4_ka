@@ -18,4 +18,10 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return this.iEstudianteRepository.seleccionarPorCedula(cedula);
 	}
 
+	@Override
+	public void guardar(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		this.iEstudianteRepository.insertar(estudiante);
+	}
+
 }
