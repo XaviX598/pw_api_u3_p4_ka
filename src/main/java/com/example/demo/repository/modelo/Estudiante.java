@@ -1,6 +1,5 @@
 package com.example.demo.repository.modelo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -39,6 +38,9 @@ public class Estudiante {
 	@Column(name = "estu_fecha_nacimiento")
 
 	private LocalDateTime fechaNacimiento;
+
+	@Column(name = "estu_provincia")
+	private String provincia;
 
 //    SET y GET
 	public Integer getId() {
@@ -81,12 +83,18 @@ public class Estudiante {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
 	@Override
 	public String toString() {
 		return "Estudiante [id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", fechaNacimiento=" + fechaNacimiento + "]";
+				+ ", fechaNacimiento=" + fechaNacimiento + ", provincia=" + provincia + "]";
 	}
-	
-	
 
 }

@@ -26,8 +26,8 @@ public class PwApiU3P4KaApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(this.iEstudianteService.consultarPorCedula("1724441041"));	
-		System.out.println(this.iMateriaService.consultarPorNombre("programacion"));	
+//		System.out.println(this.iEstudianteService.consultarPorCedula("1724441041"));	
+//		System.out.println(this.iMateriaService.consultarPorNombre("programacion"));	
 	}
 
 }

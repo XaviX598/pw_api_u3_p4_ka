@@ -22,7 +22,7 @@ public class MateriaControllerRestful {
 	// GET
 	@GetMapping(path = "/buscar")
 	public List<Materia> consultarPorNombre() {
-		String nombre = "programacion";
+		String nombre = "programacion web";
 		return this.iMateriaService.consultarPorNombre(nombre);
 	}
 
@@ -30,6 +30,7 @@ public class MateriaControllerRestful {
 	public void guardar(@RequestBody Materia materia) {
 		this.iMateriaService.guardar(materia);
 	}
+	
 //	@PutMapping(path = "/actualizar")
 //	public void actualizar() {
 //		
