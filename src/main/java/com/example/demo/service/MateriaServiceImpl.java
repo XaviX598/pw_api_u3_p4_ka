@@ -10,7 +10,7 @@ import com.example.demo.repository.modelo.Materia;
 
 @Service
 public class MateriaServiceImpl implements IMateriaService {
-	
+
 	@Autowired
 	private IMateriaRepository iMateriaRepository;
 
@@ -24,6 +24,24 @@ public class MateriaServiceImpl implements IMateriaService {
 	public void guardar(Materia materia) {
 		// TODO Auto-generated method stub
 		this.iMateriaRepository.insertar(materia);
+	}
+
+	@Override
+	public void actualizar(Materia materia) {
+		// TODO Auto-generated method stub
+		this.iMateriaRepository.actualizar(materia);
+	}
+
+	@Override
+	public void borrar(Integer id) {
+		// TODO Auto-generated method stub
+		this.iMateriaRepository.borrar(id);
+	}
+
+	@Override
+	public Materia consultarId(Integer id) {
+		// TODO Auto-generated method stub
+		return this.iMateriaRepository.buscarID(id);
 	}
 
 }

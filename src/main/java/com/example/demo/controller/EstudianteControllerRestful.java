@@ -26,48 +26,45 @@ public class EstudianteControllerRestful {
 	private IEstudianteService iEstudianteService;
 
 	// GET
-	@GetMapping(path = "/buscar/{cedula}") // path variable es la tura de la variable
+	@GetMapping(path = "/{cedula}") // path variable es la tura de la variable
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
 		return this.iEstudianteService.consultarPorCedula(cedula);
 	}
 
-	//para buscar todos sin filtro
-//	@GetMapping(path = "/buscarTodos") //path variable es la tura de la variable
-//	public List<Estudiante>  consultarTodos() {
+	// para buscar todos sin filtro
+//	@GetMapping // path variable es la tura de la variable
+//	public List<Estudiante> consultarTodos() {
 //		return this.iEstudianteService.buscarTodos();
 //	}
+
 	// lo mismo que arriba pero para filtrar
-	@GetMapping(path = "/buscarTodos") // path variable es la tura de la variable
-	public List<Estudiante> consultarTodos(@RequestParam String provincia) {
-		//para buscar seria /buscarTodos?provincia=pichincha 
-		return this.iEstudianteService.buscarTodos(provincia);
+	@GetMapping // path variable es la tura de la variable
+	public List<Estudiante> consultarTodosProvincia(@RequestParam String provincia) {
+		// para buscar seria /buscarTodos?provincia=pichincha
+		return this.iEstudianteService.buscarTodosProvincia(provincia);
 	}
 
-	@PostMapping(path = "/guardar")
-	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del
-																// request
+	@PostMapping
+	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del													// request
 		this.iEstudianteService.guardar(estudiante);
 	}
 
-	@PutMapping(path = "/actualizar/{identificador}")
+	@PutMapping(path = "/{identificador}")
 	public void actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
-//		Integer identificador = 1; //el identificador de un estudiante de momento quemado
-
 		estudiante.setId(identificador);
 		this.iEstudianteService.actualizar(estudiante);
 	}
 
-	@PatchMapping(path = "/actualizarParcial/{identificador}")
+	@PatchMapping(path = "{identificador}")
 	public void actualizarParcial(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
-//		Integer identificador = 1; //el identificador de un estudiante de momento quemado
-		estudiante.setId(identificador);
-//		String cedula = "1724441041";
-		Estudiante e1 = this.iEstudianteService.consultarId(identificador);
-		this.iEstudianteService.actualizar(e1);
+		Estudiante estu1 = this.iEstudianteService.consultarId(identificador);
+		estu1.setId(identificador);
+		estu1.setCedula(estudiante.getCedula());
+		this.iEstudianteService.actualizar(estu1);
 	}
 
-	@DeleteMapping(path = "/borrar/{id}")
-	public void borrar(Integer id) {
+	@DeleteMapping(path = "/{id}")
+	public void borrar(@PathVariable Integer id) {
 		this.iEstudianteService.eliminar(id);
 	}
 

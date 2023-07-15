@@ -10,8 +10,8 @@ public interface IEstudianteService {
 	public void guardar(Estudiante estudiante);
 	public void actualizar(Estudiante estudiante);
 	public void eliminar(Integer id);
-	public List<Estudiante> buscarTodos(String provincia);
-	
+	public List<Estudiante> buscarTodosProvincia(String provincia);
+	public List<Estudiante> buscarTodos();
 	public Estudiante consultarId(Integer id);
 
 }

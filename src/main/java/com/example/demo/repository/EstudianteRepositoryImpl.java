@@ -52,17 +52,25 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 	@Override
 	public void borrar(Integer id) {
 		// TODO Auto-generated method stub
-
-		this.entityManager.remove(this.buscarID(id));
+		Estudiante e = this.buscarID(id);
+		this.entityManager.remove(e);
 	}
 
 	@Override
-	public List<Estudiante> buscarTodos(String provincia) {
+	public List<Estudiante> buscarTodosProvincia(String provincia) {
 		// TODO Auto-generated method stub
 		TypedQuery<Estudiante> myQuery = this.entityManager
 				.createQuery("SELECT e FROM Estudiante e WHERE e.provincia = :datoProvincia", Estudiante.class);
 
 		myQuery.setParameter("datoProvincia", provincia);
+		return myQuery.getResultList();
+	}
+	
+	@Override
+	public List<Estudiante> buscarTodos() {
+		// TODO Auto-generated method stub
+		TypedQuery<Estudiante> myQuery = this.entityManager
+				.createQuery("SELECT e FROM Estudiante e", Estudiante.class);
 		return myQuery.getResultList();
 	}
 

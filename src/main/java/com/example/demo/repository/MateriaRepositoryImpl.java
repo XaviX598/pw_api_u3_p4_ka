@@ -8,6 +8,7 @@ import com.example.demo.repository.modelo.Materia;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
@@ -31,5 +32,35 @@ public class MateriaRepositoryImpl implements IMateriaRepository {
 	public void insertar(Materia materia) {
 		// TODO Auto-generated method stub
 		this.entityManager.persist(materia);
+	}
+
+	@Override
+	public void actualizar(Materia materia) {
+		// TODO Auto-generated method stub
+		this.entityManager.merge(materia);
+
+	}
+
+	@Override
+	public void actualizarParcial(String horasActual, String horasNuevo) {
+		// TODO Auto-generated method stub
+		Query myQuery = this.entityManager
+				.createQuery("UPDATE Estudiante e SET e.horas= :datoHoras WHERE e.horas= :datoHoraNueva");
+		myQuery.setParameter("datoHoras", horasNuevo);
+		myQuery.setParameter("datoHoraNueva", horasActual);
+		myQuery.executeUpdate();
+	}
+
+	@Override
+	public void borrar(Integer id) {
+		// TODO Auto-generated method stub
+		Materia m = this.buscarID(id);
+		this.entityManager.remove(m);
+	}
+
+	@Override
+	public Materia buscarID(Integer id) {
+		// TODO Auto-generated method stub
+		return this.entityManager.find(Materia.class, id);
 	}
 }
