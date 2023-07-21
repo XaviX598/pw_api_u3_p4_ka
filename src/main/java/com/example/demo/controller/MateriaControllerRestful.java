@@ -3,6 +3,10 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,8 +29,9 @@ public class MateriaControllerRestful {
 
 	// GET
 	@GetMapping(path = "/buscar/{nombre}")
-	public List<Materia> consultarPorNombre(@PathVariable String nombre) {
-		return this.iMateriaService.consultarPorNombre(nombre);
+	public ResponseEntity<List<Materia>>  consultarPorNombre(@PathVariable String nombre) {
+		List<Materia> list = this.iMateriaService.consultarPorNombre(nombre);
+		return  ResponseEntity.status(HttpStatus.OK).body(list);//para revisar que codigos tiene es HttpStatus
 	}
 
 	@PostMapping(path = "/guardar")

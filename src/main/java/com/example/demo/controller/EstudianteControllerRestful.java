@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Estudiante;
@@ -27,25 +28,37 @@ public class EstudianteControllerRestful {
 
 	// GET
 	@GetMapping(path = "/{cedula}") // path variable es la tura de la variable
-	public Estudiante consultarPorCedula(@PathVariable String cedula) {
-		return this.iEstudianteService.consultarPorCedula(cedula);
+	// grapper que nos permite envolver el objeto
+	public ResponseEntity<Estudiante> consultarPorCedula(@PathVariable String cedula) {
+		return ResponseEntity.status(227).body(this.iEstudianteService.consultarPorCedula(cedula)); // lo que va dentro
+																									// del status va el																				// codigo de estado
 	}
 
 	// para buscar todos sin filtro
-//	@GetMapping // path variable es la tura de la variable
-//	public List<Estudiante> consultarTodos() {
-//		return this.iEstudianteService.buscarTodos();
-//	}
-
-	// lo mismo que arriba pero para filtrar
 	@GetMapping // path variable es la tura de la variable
-	public List<Estudiante> consultarTodosProvincia(@RequestParam String provincia) {
-		// para buscar seria /buscarTodos?provincia=pichincha
-		return this.iEstudianteService.buscarTodosProvincia(provincia);
+	public ResponseEntity<List<Estudiante>> consultarTodos() {
+		List<Estudiante> list = this.iEstudianteService.buscarTodos();
+		HttpHeaders cabeceras = new HttpHeaders();
+		cabeceras.add("detalleMensaje", "Cuidadanos consultados correctamente");
+		cabeceras.add("valorApi", "Incalculable");
+		return new ResponseEntity<>(list, cabeceras, 228);
 	}
 
+	// lo mismo que arriba pero para filtrar
+//	@GetMapping // path variable es la tura de la variable
+//	public  ResponseEntity<List<Estudiante>> consultarTodosProvincia(@RequestParam String provincia) {
+//		// para buscar seria /buscarTodos?provincia=pichincha
+//		List<Estudiante> lista = this.iEstudianteService.buscarTodosProvincia(provincia);
+//		
+//		//si queremos usar la cabecera para mandar un mensaje 
+//		
+//	
+//		return new ResponseEntity<>(lista, cabeceras, 228)
+//	}
+
 	@PostMapping
-	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del													// request
+	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del //
+																// request
 		this.iEstudianteService.guardar(estudiante);
 	}
 
