@@ -10,6 +10,8 @@ public interface IEstudianteRepository {
 	
 	public void insertar(Estudiante estudiante);
 	
+	public Estudiante guardarYDevolver(Estudiante estudiante);
+	
 	public void actualizar(Estudiante estudiante);
 	
 	public void actualizarParcial(String cedulaActual, String cedulaNueva);

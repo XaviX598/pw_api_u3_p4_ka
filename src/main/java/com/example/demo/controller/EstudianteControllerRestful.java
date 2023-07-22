@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Estudiante;
@@ -27,11 +30,12 @@ public class EstudianteControllerRestful {
 	private IEstudianteService iEstudianteService;
 
 	// GET
-	@GetMapping(path = "/{cedula}") // path variable es la tura de la variable
+	@GetMapping(path = "/{cedula}", produces = "application/xml") // path variable es la tura de la variable, esta api no consume un body solo lo produce
 	// grapper que nos permite envolver el objeto
-	public ResponseEntity<Estudiante> consultarPorCedula(@PathVariable String cedula) {
-		return ResponseEntity.status(227).body(this.iEstudianteService.consultarPorCedula(cedula)); // lo que va dentro
-																									// del status va el																				// codigo de estado
+	@ResponseStatus(HttpStatus.OK)//tambien se puede poner el codigo asi
+	public Estudiante consultarPorCedula(@PathVariable String cedula) {
+	
+		return this.iEstudianteService.consultarPorCedula(cedula);
 	}
 
 	// para buscar todos sin filtro
@@ -52,14 +56,19 @@ public class EstudianteControllerRestful {
 //		
 //		//si queremos usar la cabecera para mandar un mensaje 
 //		
-//	
+//	OF
 //		return new ResponseEntity<>(lista, cabeceras, 228)
 //	}
 
-	@PostMapping
-	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del //
-																// request
-		this.iEstudianteService.guardar(estudiante);
+//	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) // enves de  "application/xml" se pued poner tambien lo de aqui
+//	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del //
+//																// request
+//		this.iEstudianteService.guardar(estudiante);
+//	}
+	
+	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {
+		return this.iEstudianteService.insertarYDevolver(estudiante);
 	}
 
 	@PutMapping(path = "/{identificador}")

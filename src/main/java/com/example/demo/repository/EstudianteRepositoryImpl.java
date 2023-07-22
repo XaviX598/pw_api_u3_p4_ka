@@ -79,4 +79,11 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository {
 		// TODO Auto-generated method stub
 		return this.entityManager.find(Estudiante.class, id);
 	}
+
+	@Override
+	public Estudiante guardarYDevolver(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		this.insertar(estudiante);
+		return this.buscarID(estudiante.getId());
+	}
 }

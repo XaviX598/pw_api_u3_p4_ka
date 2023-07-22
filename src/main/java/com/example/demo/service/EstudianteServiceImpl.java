@@ -58,5 +58,11 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		return this.iEstudianteRepository.buscarTodosProvincia(provincia);
 	}
 
+	@Override
+	public Estudiante insertarYDevolver(Estudiante estudiante) {
+		// TODO Auto-generated method stub
+		return this.iEstudianteRepository.guardarYDevolver(estudiante);
+	}
+
 
 }
