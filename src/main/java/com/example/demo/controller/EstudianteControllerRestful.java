@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.to.EstudianteTO;
+import com.example.demo.service.to.MateriaTO;
 
 @RestController
 @RequestMapping("/estudiantes") // aqui ponermos el path de ese controlador, debe estar en PLURAL y con el
@@ -30,11 +36,12 @@ public class EstudianteControllerRestful {
 	private IEstudianteService iEstudianteService;
 
 	// GET
-	@GetMapping(path = "/{cedula}", produces = "application/xml") // path variable es la tura de la variable, esta api no consume un body solo lo produce
+	@GetMapping(path = "/{cedula}", produces = "application/xml") // path variable es la tura de la variable, esta api
+																	// no consume un body solo lo produce
 	// grapper que nos permite envolver el objeto
-	@ResponseStatus(HttpStatus.OK)//tambien se puede poner el codigo asi
+	@ResponseStatus(HttpStatus.OK) // tambien se puede poner el codigo asi
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
-	
+
 		return this.iEstudianteService.consultarPorCedula(cedula);
 	}
 
@@ -65,7 +72,25 @@ public class EstudianteControllerRestful {
 //																// request
 //		this.iEstudianteService.guardar(estudiante);
 //	}
-	
+
+	@GetMapping(path = "/hateoas")
+	public ResponseEntity<List<EstudianteTO>> consultarTodosHATEOAS() {
+		List<EstudianteTO> list = this.iEstudianteService.consultarTodosTO();
+		for (EstudianteTO e : list) {
+			// primero construkmos el link de cada objeto estudianteTO
+			Link myLink = linkTo(methodOn(EstudianteControllerRestful.class).buscarPorEstudiante(e.getCedula()))
+					.withRel("materias");
+			e.add(myLink);
+		}
+		return new ResponseEntity<>(list, null, 200);
+
+	}
+
+	@GetMapping(path = "/{cedula}/materias")
+	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(String cedula) {
+		return null;
+	}
+
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {
 		return this.iEstudianteService.insertarYDevolver(estudiante);
