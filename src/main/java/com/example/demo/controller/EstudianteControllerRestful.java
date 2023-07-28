@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.repository.modelo.Estudiante;
 import com.example.demo.service.IEstudianteService;
+import com.example.demo.service.IMateriaService;
 import com.example.demo.service.to.EstudianteTO;
 import com.example.demo.service.to.MateriaTO;
 
@@ -34,6 +35,9 @@ public class EstudianteControllerRestful {
 
 	@Autowired
 	private IEstudianteService iEstudianteService;
+	
+	@Autowired
+	private IMateriaService iMateriaService;
 
 	// GET
 	@GetMapping(path = "/{cedula}", produces = "application/xml") // path variable es la tura de la variable, esta api
@@ -73,23 +77,24 @@ public class EstudianteControllerRestful {
 //		this.iEstudianteService.guardar(estudiante);
 //	}
 
-	@GetMapping(path = "/hateoas")
+	@GetMapping(path = "/hateoas", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EstudianteTO>> consultarTodosHATEOAS() {
-		List<EstudianteTO> list = this.iEstudianteService.consultarTodosTO();
-		for (EstudianteTO e : list) {
+		List<EstudianteTO> lista = this.iEstudianteService.consultarTodosTO();
+		for (EstudianteTO e : lista) {
 			// primero construkmos el link de cada objeto estudianteTO
 			Link myLink = linkTo(methodOn(EstudianteControllerRestful.class).buscarPorEstudiante(e.getCedula()))
 					.withRel("materias");
 			e.add(myLink);
 		}
-		return new ResponseEntity<>(list, null, 200);
+		return new ResponseEntity<>(lista, null, 200);
 
 	}
 
-	@GetMapping(path = "/{cedula}/materias")
-	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(String cedula) {
-		return null;
+	@GetMapping(path = "/{cedula}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula) {
+		return new ResponseEntity<>(this.iMateriaService.buscarPorCedulaEstudiante(cedula), null, 200) ;
 	}
+	
 
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {

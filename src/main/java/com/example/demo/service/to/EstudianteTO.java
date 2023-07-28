@@ -72,11 +72,5 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 		this.provincia = provincia;
 	}
 
-	@Override
-	public String toString() {
-		return "EstudianteTO [id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", fechaNacimiento=" + fechaNacimiento + ", provincia=" + provincia + "]";
-	}
-
 	
 }
