@@ -11,7 +11,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-
+//tarea realizada antes pero ya esta subido a github y es por eso este comentario
 @Repository
 @Transactional
 public class FacturaRepositoryImpl implements IFacturaRepository {

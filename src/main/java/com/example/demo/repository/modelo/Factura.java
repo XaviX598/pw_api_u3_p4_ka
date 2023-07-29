@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+//tarea realizada antes pero ya esta subido a github y es por eso este comentario
 @Entity(name = "Factura")
 @Table(name = "factura")
 public class Factura {

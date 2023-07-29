@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,16 +32,17 @@ import com.example.demo.service.to.MateriaTO;
 @RestController
 @RequestMapping("/estudiantes") // aqui ponermos el path de ese controlador, debe estar en PLURAL y con el
 								// nombre del modelo
+@CrossOrigin
 public class EstudianteControllerRestful {
 
 	@Autowired
 	private IEstudianteService iEstudianteService;
-	
+
 	@Autowired
 	private IMateriaService iMateriaService;
 
 	// GET
-	@GetMapping(path = "/{cedula}", produces = "application/xml") // path variable es la tura de la variable, esta api
+	@GetMapping(path = "/{cedula}", produces = "application/json") // path variable es la tura de la variable, esta api
 																	// no consume un body solo lo produce
 	// grapper que nos permite envolver el objeto
 	@ResponseStatus(HttpStatus.OK) // tambien se puede poner el codigo asi
@@ -50,7 +52,7 @@ public class EstudianteControllerRestful {
 	}
 
 	// para buscar todos sin filtro
-	@GetMapping // path variable es la tura de la variable
+	@GetMapping(produces = "application/json") // path variable es la tura de la variable
 	public ResponseEntity<List<Estudiante>> consultarTodos() {
 		List<Estudiante> list = this.iEstudianteService.buscarTodos();
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -92,9 +94,13 @@ public class EstudianteControllerRestful {
 
 	@GetMapping(path = "/{cedula}/materias", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MateriaTO>> buscarPorEstudiante(@PathVariable String cedula) {
-		return new ResponseEntity<>(this.iMateriaService.buscarPorCedulaEstudiante(cedula), null, 200) ;
+		List<MateriaTO> lista = this.iMateriaService.buscarPorCedulaEstudiante(cedula);
+		for (MateriaTO m : lista) {
+			Link myLink = linkTo(methodOn(MateriaControllerRestful.class).consultarPorId(m.getId())).withSelfRel();
+			m.add(myLink);
+		}
+		return new ResponseEntity<>(lista, null, 200);
 	}
-	
 
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {

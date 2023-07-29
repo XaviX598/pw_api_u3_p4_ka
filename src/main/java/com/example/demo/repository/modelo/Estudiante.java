@@ -3,6 +3,8 @@ package com.example.demo.repository.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity(name = "Estudiante")
 @Table(name = "estudiante")
+@JsonIgnoreProperties(value = { "materias" })
 public class Estudiante {
 	@Id
 
@@ -43,7 +46,7 @@ public class Estudiante {
 
 	@Column(name = "estu_provincia")
 	private String provincia;
-	
+
 	@OneToMany(mappedBy = "estudiante")
 	private List<Materia> materias;
 
@@ -95,8 +98,6 @@ public class Estudiante {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
-	
-	
 
 	public List<Materia> getMaterias() {
 		return materias;
@@ -105,6 +106,5 @@ public class Estudiante {
 	public void setMaterias(List<Materia> materias) {
 		this.materias = materias;
 	}
-
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.repository.IFacturaRepository;
 import com.example.demo.repository.modelo.Factura;
 
+//tarea realizada antes pero ya esta subido a github y es por eso este comentario
 @Service
 public class FacturaServiceImpl implements IFacturaService {
 
