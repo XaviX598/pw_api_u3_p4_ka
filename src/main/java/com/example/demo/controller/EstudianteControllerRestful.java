@@ -73,11 +73,11 @@ public class EstudianteControllerRestful {
 //		return new ResponseEntity<>(lista, cabeceras, 228)
 //	}
 
-//	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) // enves de  "application/xml" se pued poner tambien lo de aqui
-//	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del //
-//																// request
-//		this.iEstudianteService.guardar(estudiante);
-//	}
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE) // enves de  "application/xml" se pued poner tambien lo de aqui
+	public void guardar(@RequestBody Estudiante estudiante) { // para indicar que Estduainte debe ir en el cuerpo del //
+																// request
+		this.iEstudianteService.guardar(estudiante);
+	}
 
 	@GetMapping(path = "/hateoas", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EstudianteTO>> consultarTodosHATEOAS() {
@@ -102,10 +102,10 @@ public class EstudianteControllerRestful {
 		return new ResponseEntity<>(lista, null, 200);
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {
-		return this.iEstudianteService.insertarYDevolver(estudiante);
-	}
+//	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+//	public Estudiante guardarYDevolver(@RequestBody Estudiante estudiante) {
+//		return this.iEstudianteService.insertarYDevolver(estudiante);
+//	}
 
 	@PutMapping(path = "/{identificador}")
 	public void actualizar(@RequestBody Estudiante estudiante, @PathVariable Integer identificador) {
