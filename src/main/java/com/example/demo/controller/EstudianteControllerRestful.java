@@ -47,7 +47,6 @@ public class EstudianteControllerRestful {
 	// grapper que nos permite envolver el objeto
 	@ResponseStatus(HttpStatus.OK) // tambien se puede poner el codigo asi
 	public Estudiante consultarPorCedula(@PathVariable String cedula) {
-
 		return this.iEstudianteService.consultarPorCedula(cedula);
 	}
 
