@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 
 //clase que nos permite validar un token
 @Component
@@ -18,8 +20,20 @@ public class JwtUtils {
 
 	// creamos un metodo para validar el token
 	public boolean validateJwtToken(String token) {
-		Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-		return true;
+		try {
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+			return true;
+		}catch(ExpiredJwtException e){
+			LOG.error("Token expirado{}",e.getMessage());
+		}catch(SignatureException e){
+			LOG.error("Token invalido{}",token);
+		}
+		
+		return false;
+	}
+	
+	public String getUsernameFromJwtToken(String token) {//tenemos el nombre a aprtir del token 
+		return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
 	}
 
 }
